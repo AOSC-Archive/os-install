@@ -1,0 +1,168 @@
+#!/bin/bash
+
+# Libs START
+function pausebefore() {
+    echo $1 > /tmp/.os-install-pausepoint
+}
+
+function starttask() {
+    bash /root/.os-install/src/task-$1.sh $2 $3 $4 $5
+}
+
+function task_selectVariantTarball() {
+    echo ""
+    echo "Select the variant you want:"
+    echo "    1: Base"
+    printf "Your choice is: (number) "
+    read selectedVARIANT
+    echo ""
+    echo "Select the architecture you want:"
+    echo "    1: AMD64"
+    printf "Your choice is: (number) "
+    read selectedARCH
+    selectedTARURL="https://releases.aosc.io/os-amd64/base/aosc-os_base_20200526_amd64.tar.xz"
+    echo ""
+    echo "Selected $selectedTARURL"
+    echo "Downloading..."
+    mkdir -p /tmp/ostardownload 2> /dev/null
+    curl $selectedTARURL -o /tmp/ostardownload/aosc_os.tar.xz
+}
+
+function task_untarTarball() {
+    BOOTMODE=$1
+    GRUBPATH=$2
+
+    cd /mnt/root/
+    tar --numeric-owner -pxvf /tmp/ostardownload/aosc_os.tar.xz
+
+    # Generate fstab
+    /mnt/root/usr/bin/genfstab -U -p /mnt/root >> /mnt/root/etc/fstab
+
+    # Mount
+    mkdir /mnt/root/run/udev
+    for i in dev proc sys run/udev; do mount --rbind /$i /mnt/root/$i; done
+
+    # Stage 3
+    RUNMEPATH=/mnt/root/RUNME.sh
+    echo "#!/bin/bash" >> $RUNMEPATH
+    echo "BOOTMODE=$BOOTMODE" >> $RUNMEPATH
+    echo "GRUBPATH=$GRUBPATH" >> $RUNMEPATH
+    cat /root/.os-install/src/stage3.sh >> $RUNMEPATH
+    chmod 755 /mnt/root/RUNME.sh
+
+    echo "======================================"
+    echo ""
+    echo "Sit back and relax. Half done now."
+    echo ""
+    echo ""
+    # Chroot
+    echo "What to do next? Run these commands:"
+    echo ""
+    echo -e '    \e[38;5;118mchroot /mnt/root /bin/bash\e[0m'
+    echo -e '    \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m'
+    echo -e '    \e[38;5;118m./RUNME.sh"\e[0m'
+}
+function task_selectPartition() {
+    BOOTMODE=$1
+    if [[ $BOOTMODE = EFI ]]; then
+        TARGETTYPE="ESP"
+    else
+        TARGETTYPE="disk"
+    fi
+    lsblk
+    printf "Select your installation root partition: /dev/"
+    read selectedROOTP
+    printf "Select your ${TARGETTYPE}: /dev/"
+    read selectedGRUBPATH
+
+    mkfs.ext4 /dev/$selectedROOTP
+
+    # Mount
+    mount /dev/$selectedROOTP /mnt/root
+
+    # Untar
+    task_untarTarball $BOOTMODE $selectedGRUBPATH
+}
+function task_welcome() {
+    source /etc/os-release
+    neofetch
+    echo "==============================================="
+    echo "Welcome to $PRETTY_NAME"
+    echo "==============================================="
+    echo ""
+
+    ## Instructions
+    echo "Now you may install this OS on your machine."
+    lsblk
+    echo ""
+    echo "Do you need to manage partitions? (y/N)"
+    read isNEEDMANAGEPARTITION
+    if [[ ${isNEEDMANAGEPARTITION,,} == y ]]; then
+        echo "Ok. When you have completed, please run 'os-install install' to start over."
+        exit 0
+    fi
+
+    ## Select boot mode
+    function task_selectBootMode() {
+        echo "Select your Boot Mode. Do you like EFI or BIOS?"
+        echo "If this is a modern device (after 2010), it may use EFI mode."
+        echo "  1: EFI"
+        echo "  2: BIOS"
+        printf "Make your choice now (1 or 2): "
+        read selectedBOOTMODE
+
+        case $selectedBOOTMODE in
+            1)
+                task_selectPartition EFI
+                ;;
+            2)
+                task_selectPartition BIOS
+                ;;
+            *)
+                echo "Please select 1 or 2."
+                echo ""
+                task_selectBootMode
+                ;;
+        esac
+    }
+    task_selectBootMode
+}
+
+# Initialize
+SUBCOMMAND=$1
+ARG0=$2
+ARG1=$3
+
+case $SUBCOMMAND in
+    download)
+        echo ""
+        echo "======================================"
+        echo -e "== \e[38;5;118mWelcome to OS-INSTALL Downloader\e[0m =="
+        echo "======================================"
+        echo ""
+        echo ""
+        echo "Before you start..."
+        echo ""
+        echo "Intead of using this command, you may also download a tarball manually."
+        echo ""
+        echo "Just make sure that the downloaded tarball is located at:"
+        printf "    \e[38;5;118m/tmp/ostardownload/aosc_os.tar.xz\e[0m"
+        echo ""
+        echo ""
+        printf "Would you like to continue with this command? (y/N) "
+        read isWANTCONTINUE
+        if [[ x${isWANTCONTINUE,,} == xy ]]; then
+            task_selectVariantTarball
+        else
+            echo ""
+        fi
+        ;;
+    install)
+        task_welcome
+        ;;
+    *)
+        echo "Usage:"
+        echo "    \e[38;5;118mos-install download\e[0m               Start downloading a installation package (tarball)"
+        echo "    \e[38;5;118mos-install install\e[0m                Install from the downloaded tarball"
+        ;;
+esac

@@ -1,0 +1,10 @@
+if [ -f "/etc/bashrc" ] ; then
+  source /etc/bashrc
+fi
+
+# AOSC Installation Helper
+export PATH="/root/.os-install/bin/:$PATH"
+mkdir /tmp/ostardownload 2> /dev/null
+neofetch
+cat /root/README.md
+os-install download
