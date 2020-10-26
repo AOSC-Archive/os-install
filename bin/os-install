@@ -35,7 +35,7 @@ function task_selectVariantTarball() {
     function subtask_askArch() {
         selectedVARIANT=$1
         echo ""
-        echo "Downloader Step 2: $(c_green 'Choose architecture')"
+        echo "Downloader Step 3: $(c_green 'Choose architecture')"
         echo "===================================="
         echo "Which architecture would you like to use?"
         echo ""
@@ -62,7 +62,7 @@ function task_selectVariantTarball() {
         selectedVARIANT=$1
         selectedARCH=$2
         echo ""
-        echo "Downloader Step 3: $(c_green 'Choose tarball')"
+        echo "Downloader Step 4: $(c_green 'Choose tarball')"
         echo "===================================="
         echo "Which tarball would you like to use?"
         echo ""
@@ -90,7 +90,7 @@ function task_selectVariantTarball() {
         selectedARCH=$2
         selectedTARBALL=$3
         echo ""
-        echo "Downloader Step 4: $(c_green 'Choose mirror')"
+        echo "Downloader Step 5: $(c_green 'Choose mirror')"
         echo "===================================="
         echo "Which tarball would you like to use?"
         echo ""
