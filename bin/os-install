@@ -47,7 +47,7 @@ function task_untarTarball() {
 #!/bin/bash -e
 set -e
 BOOTMODE=$BOOTMODE
-GRUBPATH=$GRUBPATH
+GRUBPATH="$GRUBPATH"
 ENDOFFILE
 
     cat /root/.os-install/src/stage3.sh >> $RUNMEPATH
@@ -62,7 +62,7 @@ Sit back and relax. Half done now.
 What to do next? Run these commands:
 
     \e[38;5;118mchroot /mnt/root /bin/bash\e[0m
-    \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m
+    \e[38;5;118mexport PS1="(chroot) \$PS1"\e[0m
     \e[38;5;118m./RUNME.sh\e[0m
 
 ENDOFFILE
