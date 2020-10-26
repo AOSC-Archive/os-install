@@ -176,7 +176,6 @@ ENDOFFILE
 
 Sit back and relax. Half done now.
 
-
 What to do next? Run these commands:
 
     \e[38;5;118mchroot /mnt/root /bin/bash\e[0m
