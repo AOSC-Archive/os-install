@@ -18,7 +18,7 @@ function task_selectVariantTarball() {
 
         read selectedVARIANT
         FOUND_GOOD_VARIANT=0
-        for i in VARIANTS; do
+        for i in $VARIANT_INDEX_ARR; do
             if [[ $selectedVARIANT == $i ]]; then
                 FOUND_GOOD_VARIANT=1
             fi
@@ -44,7 +44,7 @@ function task_selectVariantTarball() {
 
         read selectedARCH
         FOUND_GOOD_ARCH=0
-        for i in VARIANTS; do
+        for i in $ARCH_INDEX_ARR; do
             if [[ $selectedARCH == $i ]]; then
                 FOUND_GOOD_ARCH=1
             fi
@@ -71,8 +71,8 @@ function task_selectVariantTarball() {
 
         read selectedTARBALL
         FOUND_GOOD_TARBALL=0
-        for i in VARIANTS; do
-            if [[ $selectedARCH == $i ]]; then
+        for i in $TARBALL_INDEX_ARR; do
+            if [[ $selectedTARBALL == $i ]]; then
                 FOUND_GOOD_TARBALL=1
             fi
         done
@@ -98,13 +98,13 @@ function task_selectVariantTarball() {
         source /root/.os-install/etc/x-askMirror.sh
 
         read selectedMIRROR
-        FOUND_GOOD_TARBALL=0
-        for i in VARIANTS; do
-            if [[ $selectedARCH == $i ]]; then
-                FOUND_GOOD_TARBALL=1
+        FOUND_GOOD_MIRROR=0
+        for i in $MIRROR_INDEX_ARR; do
+            if [[ $selectedMIRROR == $i ]]; then
+                FOUND_GOOD_MIRROR=1
             fi
         done
-        if [[ $FOUND_GOOD_TARBALL == 0 ]]; then
+        if [[ $FOUND_GOOD_MIRROR == 0 ]]; then
             echo ""
             echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
             subtask_askMirror $selectedVARIANT $selectedARCH $selectedTARBALL
