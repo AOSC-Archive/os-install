@@ -60,7 +60,7 @@ function task_untarTarball() {
     echo ""
     echo -e '    \e[38;5;118mchroot /mnt/root /bin/bash\e[0m'
     echo -e '    \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m'
-    echo -e '    \e[38;5;118m./RUNME.sh"\e[0m'
+    echo -e '    \e[38;5;118m./RUNME.sh\e[0m'
 }
 function task_selectPartition() {
     BOOTMODE=$1
