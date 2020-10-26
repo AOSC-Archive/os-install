@@ -211,9 +211,8 @@ function task_selectPartition() {
 }
 function task_welcome() {
     source /etc/os-release
-    neofetch
     echo "==============================================="
-    echo "Welcome to $PRETTY_NAME"
+    echo "Welcome to OS-Install utility"
     echo "==============================================="
     echo ""
 
@@ -221,7 +220,7 @@ function task_welcome() {
     echo "Now you may install this OS on your machine."
     lsblk
     echo ""
-    echo "Do you need to manage partitions? (y/N)"
+    echo "Do you need to managePRETTY_NAME partitions? (y/N)"
     read isNEEDMANAGEPARTITION
     if [[ ${isNEEDMANAGEPARTITION,,} == y ]]; then
         echo "Ok. When you have completed, please run 'os-install install' to start over."
