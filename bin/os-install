@@ -1,12 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
+
+set -e
 
 # Libs START
 function pausebefore() {
     echo $1 > /tmp/.os-install-pausepoint
-}
-
-function starttask() {
-    bash /root/.os-install/src/task-$1.sh $2 $3 $4 $5
 }
 
 function task_selectVariantTarball() {
@@ -44,24 +42,32 @@ function task_untarTarball() {
 
     # Stage 3
     RUNMEPATH=/mnt/root/RUNME.sh
-    echo "#!/bin/bash" >> $RUNMEPATH
-    echo "BOOTMODE=$BOOTMODE" >> $RUNMEPATH
-    echo "GRUBPATH=$GRUBPATH" >> $RUNMEPATH
+
+    cat << ENDOFFILE >> $RUNMEPATH
+#!/bin/bash -e
+set -e
+BOOTMODE=$BOOTMODE
+GRUBPATH=$GRUBPATH
+ENDOFFILE
+
     cat /root/.os-install/src/stage3.sh >> $RUNMEPATH
     chmod 755 /mnt/root/RUNME.sh
 
-    echo "======================================"
-    echo ""
-    echo "Sit back and relax. Half done now."
-    echo ""
-    echo ""
-    # Chroot
-    echo "What to do next? Run these commands:"
-    echo ""
-    echo -e '    \e[38;5;118mchroot /mnt/root /bin/bash\e[0m'
-    echo -e '    \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m'
-    echo -e '    \e[38;5;118m./RUNME.sh\e[0m'
+    cat << ENDOFFILE
+======================================
+
+Sit back and relax. Half done now.
+
+
+What to do next? Run these commands:
+
+    \e[38;5;118mchroot /mnt/root /bin/bash\e[0m
+    \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m
+    \e[38;5;118m./RUNME.sh\e[0m
+ENDOFFILE
+
 }
+
 function task_selectPartition() {
     BOOTMODE=$1
     if [[ $BOOTMODE = EFI ]]; then

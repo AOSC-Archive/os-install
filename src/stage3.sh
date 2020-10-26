@@ -14,8 +14,10 @@ fi
 source /etc/os-release
 if [[ $BOOTMODE == 'EFI' ]]; then
     mkdir /efi 2> /dev/null
+    set -e
     mount /dev/$GRUBPATH /efi
     grub-install --target=x86_64-efi --bootloader-id="$NAME" --efi-directory=/efi
+    set +e
 else
     grub-install --target=i386-pc /dev/$GRUBPATH
 fi
