@@ -132,7 +132,7 @@ function task_selectVariantTarball() {
     echo "Downloader Step 1: $(c_green 'Download or skip')"
     echo "===================================="
     printf "Do you want to download now? (Y/n) "
-    read isINSTALLNOW
+    read isDOWNLOADNOW
     echo ""
     case $isDOWNLOADNOW in
         y*|Y*)
