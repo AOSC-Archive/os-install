@@ -64,6 +64,7 @@ What to do next? Run these commands:
     \e[38;5;118mchroot /mnt/root /bin/bash\e[0m
     \e[38;5;118mexport PS1="(chroot) $PS1"\e[0m
     \e[38;5;118m./RUNME.sh\e[0m
+
 ENDOFFILE
 
 }
