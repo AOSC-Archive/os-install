@@ -1,0 +1,4 @@
+ARCH_INDEX_ARR=(0 1)
+echo "    [$(c_green 0)]    amd64"
+echo "    [$(c_green 1)]    arm64"
+NUM_MAX_ALLOW=1

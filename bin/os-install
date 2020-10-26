@@ -3,27 +3,145 @@
 set -e
 
 # Libs START
-function pausebefore() {
-    echo $1 > /tmp/.os-install-pausepoint
+function c_green() {
+    printf "\e[38;5;118m$1\e[0m"
 }
 
 function task_selectVariantTarball() {
+    function subtask_askVariant() {
+        echo ""
+        echo "Downloader Step 2: $(c_green 'Choose variant')"
+        echo "===================================="
+        echo "Which variant would you like to download?"
+        echo ""
+        source /root/.os-install/etc/x-askVariant.sh
+
+        read selectedVARIANT
+        FOUND_GOOD_VARIANT=0
+        for i in VARIANTS; do
+            if [[ $selectedVARIANT == $i ]]; then
+                FOUND_GOOD_VARIANT=1
+            fi
+        done
+        if [[ $FOUND_GOOD_VARIANT == 0 ]]; then
+            echo ""
+            echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
+            subtask_askVariant
+        else
+            subtask_askArch $selectedVARIANT
+        fi
+    }
+
+    function subtask_askArch() {
+        selectedVARIANT=$1
+        echo ""
+        echo "Downloader Step 2: $(c_green 'Choose architecture')"
+        echo "===================================="
+        echo "Which architecture would you like to use?"
+        echo ""
+
+        source /root/.os-install/variant-archs/$selectedVARIANT
+
+        read selectedARCH
+        FOUND_GOOD_ARCH=0
+        for i in VARIANTS; do
+            if [[ $selectedARCH == $i ]]; then
+                FOUND_GOOD_ARCH=1
+            fi
+        done
+        if [[ $FOUND_GOOD_ARCH == 0 ]]; then
+            echo ""
+            echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
+            subtask_askArch $selectedVARIANT
+        else
+            subtask_askTarball $selectedVARIANT $selectedARCH
+        fi
+    }
+
+    function subtask_askTarball() {
+        selectedVARIANT=$1
+        selectedARCH=$2
+        echo ""
+        echo "Downloader Step 3: $(c_green 'Choose tarball')"
+        echo "===================================="
+        echo "Which tarball would you like to use?"
+        echo ""
+
+        source /root/.os-install/variant-arch-tarballs/$selectedVARIANT-$selectedARCH
+
+        read selectedTARBALL
+        FOUND_GOOD_TARBALL=0
+        for i in VARIANTS; do
+            if [[ $selectedARCH == $i ]]; then
+                FOUND_GOOD_TARBALL=1
+            fi
+        done
+        if [[ $FOUND_GOOD_TARBALL == 0 ]]; then
+            echo ""
+            echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
+            subtask_askTarball $selectedVARIANT $selectedARCH
+        else
+            subtask_askMirror $selectedVARIANT $selectedARCH $selectedTARBALL
+        fi
+    }
+
+    function subtask_askMirror() {
+        selectedVARIANT=$1
+        selectedARCH=$2
+        selectedTARBALL=$3
+        echo ""
+        echo "Downloader Step 4: $(c_green 'Choose mirror')"
+        echo "===================================="
+        echo "Which tarball would you like to use?"
+        echo ""
+
+        source /root/.os-install/etc/x-askMirror.sh
+
+        read selectedMIRROR
+        FOUND_GOOD_TARBALL=0
+        for i in VARIANTS; do
+            if [[ $selectedARCH == $i ]]; then
+                FOUND_GOOD_TARBALL=1
+            fi
+        done
+        if [[ $FOUND_GOOD_TARBALL == 0 ]]; then
+            echo ""
+            echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
+            subtask_askMirror $selectedVARIANT $selectedARCH $selectedTARBALL
+        else
+            # Continue
+            subtask_startDownload $selectedVARIANT $selectedARCH $selectedTARBALL $selectedMIRROR
+        fi
+    }
+
+    function subtask_startDownload() {
+        selectedVARIANT=$1
+        selectedARCH=$2
+        selectedTARBALL=$3
+        selectedMIRROR=$4
+        source /root/.os-install/variant-arch-tarball-detail/$selectedVARIANT-$selectedARCH-$selectedTARBALL
+        source /root/.os-install/mirrors/$selectedMIRROR
+        echo ""
+        echo $(c_green "Starting to download...")
+        echo ""
+        echo "   (Fake Download Demo)"
+        echo "   (Put file to /mnt/root/downloaded_os.tar.xz)"
+    }
+
     echo ""
-    echo "Select the variant you want:"
-    echo "    1: Base"
-    printf "Your choice is: (number) "
-    read selectedVARIANT
+    echo "Downloader Step 1: $(c_green 'Download or skip')"
+    echo "===================================="
+    printf "Do you want to download now? (Y/n) "
+    read isINSTALLNOW
     echo ""
-    echo "Select the architecture you want:"
-    echo "    1: AMD64"
-    printf "Your choice is: (number) "
-    read selectedARCH
-    selectedTARURL="https://releases.aosc.io/os-amd64/base/aosc-os_base_20200526_amd64.tar.xz"
-    echo ""
-    echo "Selected $selectedTARURL"
-    echo "Downloading..."
-    mkdir -p /tmp/ostardownload 2> /dev/null
-    curl $selectedTARURL -o /tmp/ostardownload/aosc_os.tar.xz
+    case $isDOWNLOADNOW in
+        y*|Y*)
+            subtask_askVariant
+            ;;
+        *)
+            exit 0
+            ;;
+    esac
 }
 
 function task_untarTarball() {
@@ -31,7 +149,7 @@ function task_untarTarball() {
     GRUBPATH=$2
 
     cd /mnt/root/
-    tar --numeric-owner -pxvf /tmp/ostardownload/aosc_os.tar.xz
+    tar --numeric-owner -pxvf /mnt/root/os_tar_download/downloaded_os.tar.xz
 
     # Generate fstab
     /mnt/root/usr/bin/genfstab -U -p /mnt/root >> /mnt/root/etc/fstab
@@ -82,10 +200,11 @@ function task_selectPartition() {
     printf "Select your ${TARGETTYPE}: /dev/"
     read selectedGRUBPATH
 
-    mkfs.ext4 /dev/$selectedROOTP
-
     # Mount
     mount /dev/$selectedROOTP /mnt/root
+
+    # Download
+    task_selectVariantTarball
 
     # Untar
     task_untarTarball $BOOTMODE $selectedGRUBPATH
@@ -111,6 +230,7 @@ function task_welcome() {
 
     ## Select boot mode
     function task_selectBootMode() {
+        echo ""
         echo "Select your Boot Mode. Do you like EFI or BIOS?"
         echo "If this is a modern device (after 2010), it may use EFI mode."
         echo "  1: EFI"
@@ -140,36 +260,4 @@ SUBCOMMAND=$1
 ARG0=$2
 ARG1=$3
 
-case $SUBCOMMAND in
-    download)
-        echo ""
-        echo "======================================"
-        echo -e "== \e[38;5;118mWelcome to OS-INSTALL Downloader\e[0m =="
-        echo "======================================"
-        echo ""
-        echo ""
-        echo "Before you start..."
-        echo ""
-        echo "Intead of using this command, you may also download a tarball manually."
-        echo ""
-        echo "Just make sure that the downloaded tarball is located at:"
-        printf "    \e[38;5;118m/tmp/ostardownload/aosc_os.tar.xz\e[0m"
-        echo ""
-        echo ""
-        printf "Would you like to continue with this command? (y/N) "
-        read isWANTCONTINUE
-        if [[ x${isWANTCONTINUE,,} == xy ]]; then
-            task_selectVariantTarball
-        else
-            echo ""
-        fi
-        ;;
-    install)
-        task_welcome
-        ;;
-    *)
-        echo "Usage:"
-        echo "    \e[38;5;118mos-install download\e[0m               Start downloading a installation package (tarball)"
-        echo "    \e[38;5;118mos-install install\e[0m                Install from the downloaded tarball"
-        ;;
-esac
+task_welcome

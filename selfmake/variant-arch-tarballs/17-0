@@ -1,0 +1,7 @@
+TARBALL_INDEX_ARR=(0 1 2 3 4)
+echo "    [$(c_green 0)]    Date 20200526    Download  0.77 GB   Disk  3.99 GB"
+echo "    [$(c_green 1)]    Date 20200130    Download  0.58 GB   Disk  2.90 GB"
+echo "    [$(c_green 2)]    Date 20181001    Download  0.44 GB   Disk  2.10 GB"
+echo "    [$(c_green 3)]    Date 20190722    Download  0.63 GB   Disk  3.22 GB"
+echo "    [$(c_green 4)]    Date 20180128    Download  0.35 GB   Disk  1.61 GB"
+NUM_MAX_ALLOW=4

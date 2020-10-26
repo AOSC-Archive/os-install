@@ -1,0 +1,5 @@
+ARCH_INDEX_ARR=(0 1 2)
+echo "    [$(c_green 0)]    i486"
+echo "    [$(c_green 1)]    powerpc"
+echo "    [$(c_green 2)]    ppc64"
+NUM_MAX_ALLOW=2

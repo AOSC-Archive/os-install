@@ -6,11 +6,9 @@
 ==========================
 
 
-Welcome to AOSC OS Live CD.
+Welcome to OS-Install utility.
 
-You may run `os-install download` to choose an installation variant.
-
-You may run `os-install install` to start installing.
+You may run `os-install` to start installing.
 
 
 

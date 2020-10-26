@@ -1,0 +1,6 @@
+ARCH_INDEX_ARR=(0 1 2 3)
+echo "    [$(c_green 0)]    amd64"
+echo "    [$(c_green 1)]    arm64"
+echo "    [$(c_green 2)]    ppc64el"
+echo "    [$(c_green 3)]    loongson3"
+NUM_MAX_ALLOW=3

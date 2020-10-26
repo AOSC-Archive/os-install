@@ -1,0 +1,12 @@
+TARBALL_INDEX_ARR=(0 1 2 3 4 5 6 7 8 9)
+echo "    [$(c_green 0)]    Date 20190318    Download  0.46 GB   Disk  2.79 GB"
+echo "    [$(c_green 1)]    Date 20200526    Download  0.72 GB   Disk  4.05 GB"
+echo "    [$(c_green 2)]    Date 20181002    Download  0.45 GB   Disk  2.57 GB"
+echo "    [$(c_green 3)]    Date 20180128    Download  0.36 GB   Disk  2.09 GB"
+echo "    [$(c_green 4)]    Date latest      Download  0.72 GB   Disk  4.05 GB"
+echo "    [$(c_green 5)]    Date 20200130    Download  0.58 GB   Disk  3.32 GB"
+echo "    [$(c_green 6)]    Date 20180420    Download  0.42 GB   Disk  2.49 GB"
+echo "    [$(c_green 7)]    Date 20190722    Download  0.63 GB   Disk  3.62 GB"
+echo "    [$(c_green 8)]    Date 20200701    Download  0.72 GB   Disk  4.06 GB"
+echo "    [$(c_green 9)]    Date 20201025    Download  0.58 GB   Disk  3.22 GB"
+NUM_MAX_ALLOW=9
