@@ -27,6 +27,7 @@ echo "Now create your user."
 printf "Your full name: "
 read inputFULLNAME
 echo "Using full name '$inputFULLNAME'"
+echo ""
 printf "Your username: "
 read inputUSERNAME
 echo "Using username '$inputUSERNAME'"
