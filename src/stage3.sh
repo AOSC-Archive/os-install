@@ -11,13 +11,12 @@ if [[ x${isUPDATENOW,,} == 'xy' ]]; then
 fi
 
 # Grub
-neofetch
-source /etc/os-release
 if [[ $BOOTMODE == 'EFI' ]]; then
     mkdir -p /efi
     set +e
     mount /dev/$GRUBPATH /efi 2> /dev/null
     set -e
+    source /etc/os-release
     grub-install --target=x86_64-efi --bootloader-id="$NAME" --efi-directory=/efi
 else
     grub-install --target=i386-pc /dev/$GRUBPATH
@@ -51,11 +50,15 @@ echo ""
 echo "========================================="
 echo ""
 echo "The setup is almost done."
-echo -e "You may run '\e[38;5;118mexit\e[0m' to leave this chroot environment."
 echo -e "Then run '\e[38;5;118mreboot\e[0m' to restart this computer."
+echo ""
+echo ""
+neofetch
+echo ""
+echo ""
 echo "Remember to remove this installation media. Is it a USB flash drive?"
 echo ""
-echo "What will your verse be?"
+echo "Enjoy your new OS :)"
 echo ""
 
 rm /stage3.sh
