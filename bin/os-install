@@ -47,13 +47,13 @@ function task_selectVariantTarball() {
         source /root/.os-install/selfmake/variant-archs/$selectedVARIANT
 
         read selectedARCH
-        FOUND_GOOD_ARCH=0
+        isVALIDINPUT=0
         for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
             if [[ $selectedARCH == ${ARCH_INDEX_ARR[$i]} ]]; then
-                FOUND_GOOD_VARIANT=1
+                isVALIDINPUT=1
             fi
         done
-        if [[ $FOUND_GOOD_ARCH == 0 ]]; then
+        if [[ $isVALIDINPUT == 0 ]]; then
             echo ""
             echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
             subtask_askArch $selectedVARIANT
@@ -74,13 +74,13 @@ function task_selectVariantTarball() {
         source /root/.os-install/selfmake/variant-arch-tarballs/$selectedVARIANT-$selectedARCH
 
         read selectedTARBALL
-        FOUND_GOOD_TARBALL=0
+        isVALIDINPUT=0
         for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
             if [[ $selectedARCH == ${TARBALL_INDEX_ARR[$i]} ]]; then
-                FOUND_GOOD_TARBALL=1
+                isVALIDINPUT=1
             fi
         done
-        if [[ $FOUND_GOOD_TARBALL == 0 ]]; then
+        if [[ $isVALIDINPUT == 0 ]]; then
             echo ""
             echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
             subtask_askTarball $selectedVARIANT $selectedARCH
@@ -102,13 +102,13 @@ function task_selectVariantTarball() {
         source /root/.os-install/etc/x-askMirror.sh
 
         read selectedMIRROR
-        FOUND_GOOD_MIRROR=0
+        isVALIDINPUT=0
         for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
             if [[ $selectedMIRROR == ${MIRROR_INDEX_ARR[$i]} ]]; then
-                FOUND_GOOD_MIRROR=1
+                isVALIDINPUT=1
             fi
         done
-        if [[ $FOUND_GOOD_MIRROR == 0 ]]; then
+        if [[ $isVALIDINPUT == 0 ]]; then
             echo ""
             echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
             subtask_askMirror $selectedVARIANT $selectedARCH $selectedTARBALL
