@@ -132,6 +132,9 @@ function task_selectVariantTarball() {
         echo ""
         echo "   (Fake Download Demo)"
         echo "   (Put file to /mnt/root/downloaded_os.tar.xz)"
+        echo ""
+        echo ""
+        exit 114514
     }
 
     echo ""
