@@ -161,7 +161,7 @@ function task_untarTarball() {
     /mnt/root/usr/bin/genfstab -U -p /mnt/root >> /mnt/root/etc/fstab
 
     # Mount
-    mkdir /mnt/root/run/udev
+    mkdir -p /mnt/root/run/udev
     for i in dev proc sys run/udev; do mount --rbind /$i /mnt/root/$i; done
 
     # Stage 3
