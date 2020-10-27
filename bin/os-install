@@ -129,12 +129,12 @@ function task_selectVariantTarball() {
         echo $(c_green "Starting to download...")
         echo ""
         TARBALURL=$_MIRROR_url/$_TARBALL_path
-        echo "Downloading: $_MIRROR_url/$_TARBALL_path"
+        echo "Downloading: ${_MIRROR_url}${_TARBALL_path}"
         echo ""
         # echo "   (Fake Download Demo)"
         # echo "   (Put file to /mnt/root/downloaded_os.tar.xz)"
         echo ""
-        curl "$TARBALURL" -o /mnt/root/downloaded_os.tar.xz
+        curl "${TARBALURL}" -o /mnt/root/downloaded_os.tar.xz
     }
 
     echo ""
