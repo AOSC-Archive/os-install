@@ -4,6 +4,7 @@ set -e
 
 if [[ $1 == reset ]]; then
     umount -R -l /mnt/root
+    exit 0
 fi
 
 # Libs START
