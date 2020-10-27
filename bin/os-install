@@ -140,6 +140,8 @@ function task_selectVariantTarball() {
     echo ""
     echo "Downloader Step 1: $(c_green 'Download or skip')"
     echo "===================================="
+    echo "You can select a variant to download."
+    echo "But you can skip this step if you have already downloaded a tarball."
     printf "Do you want to download now? (Y/n) "
     read isDOWNLOADNOW
     echo ""
