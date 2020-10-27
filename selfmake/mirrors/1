@@ -1,5 +1,5 @@
 _MIRROR_name="LZUOSS at Lanzhou University"
-_MIRROR_name-tr="lzu-name"
+_MIRROR_name_tr="lzu-name"
 _MIRROR_loc="China"
-_MIRROR_loc-tr="lzu-loc"
+_MIRROR_loc_tr="lzu-loc"
 _MIRROR_url="https://mirror.lzu.edu.cn/anthon/aosc-os/"

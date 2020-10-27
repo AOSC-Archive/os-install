@@ -1,5 +1,5 @@
 _MIRROR_name="Fastly CDN"
-_MIRROR_name-tr="fastly-name"
+_MIRROR_name_tr="fastly-name"
 _MIRROR_loc="Worldwide"
-_MIRROR_loc-tr="fastly-loc"
+_MIRROR_loc_tr="fastly-loc"
 _MIRROR_url="https://aosc-repo.freetls.fastly.net/aosc-os/"

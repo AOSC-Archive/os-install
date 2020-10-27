@@ -1,5 +1,5 @@
 _MIRROR_name="Tencent OSS Mirror"
-_MIRROR_name-tr="tencent-name"
+_MIRROR_name_tr="tencent-name"
 _MIRROR_loc="China"
-_MIRROR_loc-tr="tencent-loc"
+_MIRROR_loc_tr="tencent-loc"
 _MIRROR_url="https://mirrors.cloud.tencent.com/anthon/aosc-os/"

@@ -1,5 +1,5 @@
 _MIRROR_name="OSSPlanet Mirror Server"
-_MIRROR_name-tr="ossplanet-name"
+_MIRROR_name_tr="ossplanet-name"
 _MIRROR_loc="Taiwan"
-_MIRROR_loc-tr="ossplanet-loc"
+_MIRROR_loc_tr="ossplanet-loc"
 _MIRROR_url="https://ftp.ubuntu-tw.net/mirror/anthonos/aosc-os/"

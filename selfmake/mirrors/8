@@ -1,5 +1,5 @@
 _MIRROR_name="KoDDoS HK"
-_MIRROR_name-tr="koddos-name"
+_MIRROR_name_tr="koddos-name"
 _MIRROR_loc="Hong Kong"
-_MIRROR_loc-tr="koddos-loc"
+_MIRROR_loc_tr="koddos-loc"
 _MIRROR_url="https://mirror-hk.koddos.net/anthon/aosc-os/"

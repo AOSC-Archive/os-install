@@ -63,7 +63,7 @@ let recipe = JSON.parse(fs.readFileSync(`${SWD}/recipe.json`));
                 sizeInstall = sizeInstall.replace(/(\.\d)$/, '$1/0').replace('/', '').replace(/^(\d\.)/, ' $1') + ' GB';
                 txt_archTar += `echo "    [$(c_green ${iii})]    Date ${tarball.date}${(new Array(12-tarball.date.length)).fill(' ').join('')}Download ${sizeDownload}   Disk ${sizeInstall}"\n`
                 let txt_tarItem = Object.keys(tarball).map(function (key) {
-                    return `_TARBALL_${key}="${tarball[key]}"`
+                    return `_TARBALL_${key.replace(/\-/g, '_')}="${tarball[key]}"`
                 }).join('\n');
                 fs.writeFileSync(`${SWD}/variant-arch-tarball-detail/${i}-${ii}-${iii}`, txt_tarItem);
             });
@@ -82,9 +82,9 @@ let recipe = JSON.parse(fs.readFileSync(`${SWD}/recipe.json`));
         return i;
     }).join(' ') + ')\n';
     recipe.mirrors.map(function (mirror, i) {
-        txt += `echo "    [$(c_green ${i})]${(new Array(6-i.toString().length)).fill(' ').join('')}${mirror.name}"\n`;
+        txt += `echo "    [$(c_green ${i})]${(new Array(6-i.toString().length)).fill(' ').join('')}${mirror.name}${(new Array(39-mirror.name.toString().length)).fill(' ').join('')}(${mirror.loc})"\n`;
         let txt_mirrorItem = Object.keys(mirror).map(function (key) {
-            return `_MIRROR_${key}="${mirror[key]}"`
+            return `_MIRROR_${key.replace(/\-/g, '_')}="${mirror[key]}"`
         }).join('\n');
         fs.writeFileSync(`${SWD}/mirrors/${i}`, txt_mirrorItem);
     });

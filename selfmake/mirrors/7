@@ -1,5 +1,5 @@
 _MIRROR_name="NLUUG"
-_MIRROR_name-tr="nluug-name"
+_MIRROR_name_tr="nluug-name"
 _MIRROR_loc="Europe"
-_MIRROR_loc-tr="nluug-loc"
+_MIRROR_loc_tr="nluug-loc"
 _MIRROR_url="https://ftp.nluug.nl/os/Linux/distr/anthon/aosc-os/"

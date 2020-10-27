@@ -1,5 +1,5 @@
 _MIRROR_name="Tsinghua University (TUNA)"
-_MIRROR_name-tr="tuna-name"
+_MIRROR_name_tr="tuna-name"
 _MIRROR_loc="China"
-_MIRROR_loc-tr="tuna-loc"
+_MIRROR_loc_tr="tuna-loc"
 _MIRROR_url="https://mirrors.tuna.tsinghua.edu.cn/anthon/aosc-os/"
