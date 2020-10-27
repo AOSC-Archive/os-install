@@ -58,4 +58,4 @@ echo ""
 echo "What will your verse be?"
 echo ""
 
-rm /RUNME.sh
+rm /stage3.sh
