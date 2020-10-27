@@ -32,7 +32,7 @@ function task_selectVariantTarball() {
         fi
     }
 
-    function subtask_askArch() {
+    function subtask_askArch() {selfmake
         selectedVARIANT=$1
         echo ""
         echo "Downloader Step 3: $(c_green 'Choose architecture')"
@@ -40,7 +40,7 @@ function task_selectVariantTarball() {
         echo "Which architecture would you like to use?"
         echo ""
 
-        source /root/.os-install/variant-archs/$selectedVARIANT
+        source /root/.os-install/selfmake/variant-archs/$selectedVARIANT
 
         read selectedARCH
         FOUND_GOOD_ARCH=0
@@ -67,7 +67,7 @@ function task_selectVariantTarball() {
         echo "Which tarball would you like to use?"
         echo ""
 
-        source /root/.os-install/variant-arch-tarballs/$selectedVARIANT-$selectedARCH
+        source /root/.os-install/selfmake/variant-arch-tarballs/$selectedVARIANT-$selectedARCH
 
         read selectedTARBALL
         FOUND_GOOD_TARBALL=0
