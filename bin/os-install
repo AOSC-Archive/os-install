@@ -135,6 +135,9 @@ function task_selectVariantTarball() {
         # echo "   (Put file to /mnt/root/downloaded_os.tar.xz)"
         echo ""
         curl "${TARBALURL}" -o /mnt/root/downloaded_os.tar.xz
+        echo ""
+        echo "Download complete."
+        echo ""
     }
 
     echo ""
@@ -146,7 +149,10 @@ function task_selectVariantTarball() {
     read isDOWNLOADNOW
     echo ""
     if [[ x${isDOWNLOADNOW,,} = xy ]]; then
+        echo "n" > /tmp/os-install-SKIPUNTAR
         subtask_askVariant
+    else
+        echo "y" > /tmp/os-install-SKIPUNTAR
     fi
 }
 
@@ -155,7 +161,13 @@ function task_untarTarball() {
     GRUBPATH=$2
 
     cd /mnt/root/
-    tar --numeric-owner -pxvf /mnt/root/downloaded_os.tar.xz
+    if [[ x$(cat /tmp/os-install-SKIPUNTAR) == xy ]]; then
+        echo "Skipped untar."
+        echo ""
+    else
+        tar --numeric-owner -pxvf /mnt/root/downloaded_os.tar.xz
+    fi
+    rm /tmp/os-install-SKIPUNTAR
 
     # Generate fstab
     /mnt/root/usr/bin/genfstab -U -p /mnt/root >> /mnt/root/etc/fstab
