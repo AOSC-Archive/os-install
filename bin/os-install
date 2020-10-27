@@ -2,6 +2,10 @@
 
 set -e
 
+if [[ $1 == reset ]]; then
+    umount -R -l /mnt/root
+fi
+
 # Libs START
 function c_green() {
     printf "\e[38;5;118m$1\e[0m"
