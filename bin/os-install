@@ -119,7 +119,7 @@ function task_selectVariantTarball() {
         selectedARCH=$2
         selectedTARBALL=$3
         selectedMIRROR=$4
-        source /root/.os-install/variant-arch-tarball-detail/$selectedVARIANT-$selectedARCH-$selectedTARBALL
+        source /root/.os-install/selfmake/variant-arch-tarball-detail/$selectedVARIANT-$selectedARCH-$selectedTARBALL
         source /root/.os-install/mirrors/$selectedMIRROR
         echo ""
         echo $(c_green "Starting to download...")
