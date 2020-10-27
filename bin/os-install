@@ -158,7 +158,7 @@ function task_untarTarball() {
     GRUBPATH=$2
 
     cd /mnt/root/
-    tar --numeric-owner -pxvf /mnt/root/os_tar_download/downloaded_os.tar.xz
+    tar --numeric-owner -pxvf /mnt/root/downloaded_os.tar.xz
 
     # Generate fstab
     /mnt/root/usr/bin/genfstab -U -p /mnt/root >> /mnt/root/etc/fstab
