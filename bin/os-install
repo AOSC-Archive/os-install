@@ -36,7 +36,7 @@ function task_selectVariantTarball() {
         fi
     }
 
-    function subtask_askArch() {selfmake
+    function subtask_askArch() {
         selectedVARIANT=$1
         echo ""
         echo "Downloader Step 3: $(c_green 'Choose architecture')"
