@@ -145,14 +145,9 @@ function task_selectVariantTarball() {
     printf "Do you want to download now? (Y/n) "
     read isDOWNLOADNOW
     echo ""
-    case $isDOWNLOADNOW in
-        y*|Y*)
-            subtask_askVariant
-            ;;
-        *)
-            exit 0
-            ;;
-    esac
+    if [[ x${isDOWNLOADNOW,,} = xy ]]; then
+        subtask_askVariant
+    fi
 }
 
 function task_untarTarball() {
@@ -167,7 +162,7 @@ function task_untarTarball() {
 
     # Mount
     mkdir /mnt/root/run/udev
-    for i in dev proc sys _MIRROR_urlrun/udev; do mount --rbind /$i /mnt/root/$i; done
+    for i in dev proc sys run/udev; do mount --rbind /$i /mnt/root/$i; done
 
     # Stage 3
     RUNMEPATH=/mnt/root/stage3.sh
@@ -217,9 +212,8 @@ function task_selectPartition() {
     task_untarTarball $BOOTMODE $selectedGRUBPATH
 }
 function task_welcome() {
-    source /etc/os-release
     echo "==============================================="
-    echo "Welcome to OS-Install utility"
+    echo $(c_green "Welcome to OS-Install utility")
     echo "==============================================="
     echo ""
 

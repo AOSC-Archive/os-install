@@ -11,6 +11,7 @@ if [[ x${isUPDATENOW,,} == 'xy' ]]; then
 fi
 
 # Grub
+neofetch
 source /etc/os-release
 if [[ $BOOTMODE == 'EFI' ]]; then
     mkdir /efi 2> /dev/null
