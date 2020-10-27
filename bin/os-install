@@ -22,8 +22,8 @@ function task_selectVariantTarball() {
 
         read selectedVARIANT
         FOUND_GOOD_VARIANT=0
-        for i in $VARIANT_INDEX_ARR; do
-            if [[ $selectedVARIANT == $i ]]; then
+        for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
+            if [[ $selectedVARIANT == ${VARIANT_INDEX_ARR[$i]} ]]; then
                 FOUND_GOOD_VARIANT=1
             fi
         done
@@ -48,9 +48,9 @@ function task_selectVariantTarball() {
 
         read selectedARCH
         FOUND_GOOD_ARCH=0
-        for i in $ARCH_INDEX_ARR; do
-            if [[ $selectedARCH == $i ]]; then
-                FOUND_GOOD_ARCH=1
+        for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
+            if [[ $selectedARCH == ${ARCH_INDEX_ARR[$i]} ]]; then
+                FOUND_GOOD_VARIANT=1
             fi
         done
         if [[ $FOUND_GOOD_ARCH == 0 ]]; then
@@ -75,8 +75,8 @@ function task_selectVariantTarball() {
 
         read selectedTARBALL
         FOUND_GOOD_TARBALL=0
-        for i in $TARBALL_INDEX_ARR; do
-            if [[ $selectedTARBALL == $i ]]; then
+        for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
+            if [[ $selectedARCH == ${TARBALL_INDEX_ARR[$i]} ]]; then
                 FOUND_GOOD_TARBALL=1
             fi
         done

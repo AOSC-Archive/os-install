@@ -1,0 +1,19 @@
+VARIANT_INDEX_ARR=(A B C D)
+NUM_MAX_ALLOW=3
+
+FOUND_GOOD_VARIANT=0
+
+
+for (( i = 0; i < $(($NUM_MAX_ALLOW+1)); i++ )); do
+    echo $VARIANT_INDEX_ARR{$i} ${VARIANT_INDEX_ARR[$i]}
+    if [[ $selectedVARIANT == $VARIANT_INDEX_ARR[$i] ]]; then
+        FOUND_GOOD_VARIANT=1
+    fi
+done
+
+if [[ $FOUND_GOOD_VARIANT == 0 ]]; then
+    echo ""
+    echo -e "[ERR] Please give a valid number. (0~$NUM_MAX_ALLOW)\n\n"
+else
+    echo "Failed."
+fi
