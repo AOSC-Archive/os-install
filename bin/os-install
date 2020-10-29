@@ -213,6 +213,7 @@ function task_selectPartition() {
     read selectedGRUBPATH
 
     # Mount
+    mkdir -p /mnt/root
     mount /dev/$selectedROOTP /mnt/root
 
     # Download

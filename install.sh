@@ -9,8 +9,18 @@ mkdir .os-install
 cd .os-install
 
 # git clone https://github.com/neruthes/os-install
-OSIVER="v0.1.0"
-wget "https://github.com/neruthes/os-install/archive/$OSIVER.tar.gz"
+OSIVER="v0.1.1"
+
+# Download
+if [[ x`which wget 2> /dev/null` == x/* ]]; then
+    # Found wget
+    wget -O osi-install.tar.gz "https://github.com/neruthes/os-install/archive/$OSIVER.tar.gz"
+elif [[ x`which curl 2> /dev/null` == x/* ]]; then
+    #statements
+    curl "https://github.com/neruthes/os-install/archive/$OSIVER.tar.gz" -o osi-install.tar.gz
+fi
+
+
 tar -pxf *.tar.gz
 mv os-install*/* .
-sh /root/.os-install/src/stage2.sh
+source /root/.os-install/src/stage2.sh
