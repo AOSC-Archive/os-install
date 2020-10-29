@@ -8,7 +8,7 @@ rm -r .os-install os-install 2> /dev/null
 mkdir .os-install
 cd .os-install
 
-OSIVER="v0.1.1"
+OSIVER="v0.1.2"
 TARBALURL="https://github.com/neruthes/os-install/archive/$OSIVER.tar.gz"
 
 # Download

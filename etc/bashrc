@@ -5,4 +5,3 @@ fi
 # AOSC Installation Helper
 export PATH="/root/.os-install/bin/:$PATH"
 cat /root/README.md
-os-install
