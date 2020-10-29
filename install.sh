@@ -13,10 +13,10 @@ TARBALURL="https://github.com/neruthes/os-install/archive/$OSIVER.tar.gz"
 
 # Download
 if [[ x`which wget 2> /dev/null` == x/* ]]; then
-    wget "$TARBALURL" -O osi-install.tar.gz
+    wget "$TARBALURL" -O os-install.tar.gz
     isERR=0
 elif [[ x`which curl 2> /dev/null` == x/* ]]; then
-    curl "$TARBALURL" -o osi-install.tar.gz
+    curl "$TARBALURL" -o os-install.tar.gz
     isERR=0
 fi
 
