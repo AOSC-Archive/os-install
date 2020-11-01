@@ -11,6 +11,15 @@ fi
 function c_green() {
     printf "\e[38;5;118m$1\e[0m"
 }
+function nwget() {
+    URL=$1
+    FILE=$2
+    if [[ x`which wget 2> /dev/null` == x/* ]]; then
+        wget "$URL" -O $FILE
+    elif [[ x`which curl 2> /dev/null` == x/* ]]; then
+        curl "$URL" -o $FILE
+    fi
+}
 
 function task_selectVariantTarball() {
     function subtask_askVariant() {
@@ -135,7 +144,7 @@ function task_selectVariantTarball() {
         # echo "   (Fake Download Demo)"
         # echo "   (Put file to /mnt/root/downloaded_os.tar.xz)"
         echo ""
-        curl "${TARBALURL}" -o /mnt/root/downloaded_os.tar.xz
+        nwget "${TARBALURL}" /mnt/root/downloaded_os.tar.xz
         echo ""
         echo "Download complete."
         echo ""
