@@ -250,27 +250,12 @@ function task_welcome() {
 
     ## Select boot mode
     function task_selectBootMode() {
-        echo ""
-        echo "Select your Boot Mode. Do you like EFI or BIOS?"
-        echo "If this is a modern device (after 2010), it may use EFI mode."
-        echo "  1: EFI"
-        echo "  2: BIOS"
-        printf "Make your choice now (1 or 2): "
-        read selectedBOOTMODE
-
-        case $selectedBOOTMODE in
-            1)
-                task_selectPartition EFI
-                ;;
-            2)
-                task_selectPartition BIOS
-                ;;
-            *)
-                echo "Please select 1 or 2."
-                echo ""
-                task_selectBootMode
-                ;;
-        esac
+        # EFI mode must be used if /sys/firmware/efi exists
+        if [[ -r /sys/firmware/efi ]]; then
+            task_selectPartition EFI
+        else
+            task_selectPartition BIOS
+        fi
     }
     task_selectBootMode
 }
