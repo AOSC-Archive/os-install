@@ -20,7 +20,7 @@ elif [[ x`which curl 2> /dev/null` == x/* ]]; then
     isERR=0
 fi
 
-if [[ isERR == 1 ]]; then
+if [[ $isERR == "1" ]]; then
     echo "Error: Cannot find a downloader (wget or curl). Exiting."
 
     exit 1
